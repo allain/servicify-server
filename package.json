@@ -1,0 +1,27 @@
+{
+  "name": "servicify-server",
+  "version": "0.1.0",
+  "description": "The server which exposes the servicify semver registry to webservices and consumers",
+  "main": "index.js",
+  "scripts": {
+    "test": "blue-tape test/*.js",
+    "lint": "jshint test index.js"
+  },
+  "keywords": [
+    "semver",
+    "registry"
+  ],
+  "author": "Allain Lalonde <allain.lalonde@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "jshint": "^2.8.0",
+    "tape": "^4.2.0"
+  },
+  "dependencies": {
+    "blue-tape": "^0.1.10",
+    "bluebird": "^2.10.0",
+    "node-json-rpc": "0.0.1",
+    "servicify-core": "^0.1.0",
+    "uniqid": "^1.0.0"
+  }
+}
