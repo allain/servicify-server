@@ -28,20 +28,16 @@ ServicifyServer.prototype.listen = function (opts) {
   server.port = port;
   server.host = host;
 
-  server.addMethod('register', function (args, cb) {
-    servicify.register(args[0]).nodeify(cb);
+  server.addMethod('offer', function (args, cb) {
+    servicify.offer(args[0]).nodeify(cb);
   });
 
-  server.addMethod('deregister', function (args, cb) {
-    servicify.deregister(args[0], args[1]).nodeify(cb);
+  server.addMethod('rescind', function (args, cb) {
+    servicify.rescind(args[0], args[1]).nodeify(cb);
   });
 
   server.addMethod('resolve', function (args, cb) {
     servicify.resolve(args[0], args[1]).nodeify(cb);
-  });
-
-  server.addMethod('heartbeat', function (args, cb) {
-    servicify.touch(args[0]).nodeify(cb);
   });
 
   return Promise.fromNode(function(cb) {

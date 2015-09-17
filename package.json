@@ -21,7 +21,7 @@
     "blue-tape": "^0.1.10",
     "bluebird": "^2.10.0",
     "node-json-rpc": "0.0.1",
-    "servicify-core": "^0.1.0",
+    "servicify-core": "^0.2.0",
     "uniqid": "^1.0.0"
   }
 }

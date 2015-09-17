@@ -31,33 +31,34 @@ test('is exposed as an rpc endpoint', function (t) {
 
     var expiresBefore;
 
-    callRpc(client, 'register', [
-      {name: 'a', version: '1.2.3', host: '127.0.0.1', port: 2021}
-    ]).then(function (registered) {
-      t.equal(registered.name, 'a');
-      t.equal(registered.version, '1.2.3');
-      t.equal(registered.host, '127.0.0.1');
-      t.equal(registered.port, 2021);
-      expiresBBefore = registered.expires;
-
-      return callRpc(client, 'heartbeat', [registered.id]);
-    }).then(function(touched) {
-      t.equal(touched.length, 1);
-      t.ok(touched[0].expires, 'touched record has a touched prop');
+    callRpc(client, 'offer', [
+      {name: 'a', version: '1.2.3', host: '127.0.0.1', port: 2021, expires: 1}
+    ]).then(function (offering) {
+      t.equal(offering.name, 'a');
+      t.equal(offering.version, '1.2.3');
+      t.equal(offering.host, '127.0.0.1');
+      t.equal(offering.port, 2021);
+      t.equal(offering.expires, 1);
       return callRpc(client, 'resolve', ['a', '^1.0.0']);
-    }).then(function (resolutions) {
-      t.equal(resolutions.length, 1);
-      t.equal(resolutions[0].name, 'a');
-      t.equal(resolutions[0].version, '1.2.3');
+    }).then(function (offerings) {
+      t.equal(offerings.length, 1);
+      t.equal(offerings[0].name, 'a');
+      t.equal(offerings[0].version, '1.2.3');
+      t.equal(offerings[0].host, '127.0.0.1');
+      t.equal(offerings[0].port, 2021);
+      t.equal(offerings[0].expires, 1);
 
-      return callRpc(client, 'deregister', ['a', '^1.2.3']);
-    }).then(function (deregistered) {
-      t.equal(deregistered.length, 1);
-      t.equal(deregistered[0].name, 'a');
-      t.equal(deregistered[0].version, '1.2.3');
+      return callRpc(client, 'rescind', ['a', '^1.2.3']);
+    }).then(function (rescinded) {
+      t.equal(rescinded.length, 1);
+      t.equal(rescinded[0].name, 'a');
+      t.equal(rescinded[0].version, '1.2.3');
+      t.equal(rescinded[0].host, '127.0.0.1');
+      t.equal(rescinded[0].port, 2021);
+      t.equal(rescinded[0].expires, 1);
       return callRpc(client, 'resolve', ['a', '^1.0.0']);
-    }).then(function (resolutions) {
-      t.deepEqual(resolutions, []);
+    }).then(function (offerings) {
+      t.deepEqual(offerings, []);
     }).then(srv.stop);
   });
 });
