@@ -1,13 +1,13 @@
 var rpc = require('node-json-rpc');
 var Promise = require('bluebird');
-var Servicify = require('servicify-core');
+var ServicifyCatalog = require('servicify-catalog');
 
 function ServicifyServer(opts) {
   if (!(this instanceof ServicifyServer)) return new ServicifyServer(opts);
 
   opts = opts || {};
 
-  this.servicify = new Servicify(opts);
+  this.servicify = new ServicifyCatalog(opts);
 }
 
 ServicifyServer.prototype.listen = function (opts) {
