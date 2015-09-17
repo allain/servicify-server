@@ -1,6 +1,6 @@
 {
   "name": "servicify-server",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "The server which exposes the servicify semver registry to webservices and consumers",
   "main": "index.js",
   "scripts": {
