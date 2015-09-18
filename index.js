@@ -7,11 +7,11 @@ function ServicifyServer(opts) {
 
   opts = opts || {};
 
-  this.servicify = new ServicifyCatalog(opts);
+  this.catalog = new ServicifyCatalog(opts);
 }
 
 ServicifyServer.prototype.listen = function (opts) {
-  var servicify = this.servicify;
+  var catalog = this.catalog;
 
   opts = opts || {};
 
@@ -29,13 +29,13 @@ ServicifyServer.prototype.listen = function (opts) {
   server.host = host;
 
   server.addMethod('offer', function (args, cb) {
-    servicify.offer(args[0]).nodeify(cb);
+    catalog.offer(args[0]).nodeify(cb);
   });
   server.addMethod('rescind', function (args, cb) {
-    servicify.rescind(args[0], args[1]).nodeify(cb);
+    catalog.rescind(args[0], args[1]).nodeify(cb);
   });
   server.addMethod('resolve', function (args, cb) {
-    servicify.resolve(args[0], args[1]).nodeify(cb);
+    catalog.resolve(args[0], args[1]).nodeify(cb);
   });
 
   return Promise.fromNode(function(cb) {
@@ -44,9 +44,9 @@ ServicifyServer.prototype.listen = function (opts) {
     return {
       host: host,
       port: port,
-      resolve: servicify.resolve,
-      rescind: servicify.rescind,
-      offer: servicify.offer,
+      resolve: catalog.resolve.bind(catalog),
+      rescind: catalog.rescind.bind(catalog),
+      offer: catalog.offer.bind(catalog),
       stop: Promise.promisify(server.stop)
     };
   });

@@ -40,8 +40,6 @@ test('is exposed as an rpc endpoints', function (t) {
       strict: true
     });
 
-    var expiresBefore;
-
     callRpc(client, 'offer', [
       {name: 'a', version: '1.2.3', host: '127.0.0.1', port: 2021, expires: 1}
     ]).then(function (offering) {
@@ -77,10 +75,10 @@ test('is exposed as an rpc endpoints', function (t) {
 function callRpc(client, method, args) {
   return new Promise(function (resolve, reject) {
     client.call({
-      'jsonrpc': "2.0",
+      'jsonrpc': '2.0',
       'method': method,
       'params': args,
-      "id": 1
+      'id': 1
     }, function (err, res) {
       if (err) return reject(err);
 
