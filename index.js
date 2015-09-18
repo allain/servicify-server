@@ -31,11 +31,9 @@ ServicifyServer.prototype.listen = function (opts) {
   server.addMethod('offer', function (args, cb) {
     servicify.offer(args[0]).nodeify(cb);
   });
-
   server.addMethod('rescind', function (args, cb) {
     servicify.rescind(args[0], args[1]).nodeify(cb);
   });
-
   server.addMethod('resolve', function (args, cb) {
     servicify.resolve(args[0], args[1]).nodeify(cb);
   });
@@ -46,11 +44,10 @@ ServicifyServer.prototype.listen = function (opts) {
     return {
       host: host,
       port: port,
-      stop: function () {
-        return Promise.fromNode(function(cb) {
-          server.stop(cb);
-        });
-      }
+      resolve: servicify.resolve,
+      rescind: servicify.rescind,
+      offer: servicify.offer,
+      stop: Promise.promisify(server.stop)
     };
   });
 };

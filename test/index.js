@@ -20,7 +20,18 @@ test('supports lifecycle without arguments', function (t) {
   });
 });
 
-test('is exposed as an rpc endpoint', function (t) {
+test('server has expected api', function(t) {
+  return new ServicifyServer().listen().then(function (srv) {
+    t.equal(srv.host, '127.0.0.1');
+    t.equal(srv.port, 2020);
+    t.equal(typeof srv.resolve, 'function');
+    t.equal(typeof srv.rescind, 'function');
+    t.equal(typeof srv.offer, 'function');
+    return srv.stop();
+  });
+});
+
+test('is exposed as an rpc endpoints', function (t) {
   return new ServicifyServer().listen().then(function (srv) {
     var client = new rpc.Client({
       port: 2020,
